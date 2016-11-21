@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xmlns:context="http://www.springframework.org/schema/context"
+	   xmlns:p="http://www.springframework.org/schema/p"
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context
+		http://www.springframework.org/schema/context/spring-context.xsd">
+
+	<context:annotation-config />
+
+	<context:component-scan base-package="com.zxcc.socket"></context:component-scan>
+
+
+	<!-- 同步事件总线 start -->
+	<bean id="eventBus" class="com.google.common.eventbus.EventBus"></bean>
+	<!-- 事件总线 end -->
+
+	<context:property-placeholder location="classpath:service.properties"/>
+
+	<!-- 通信层拦截器 start -->
+
+
+	<bean id="firewallFilter" class="com.zxcc.socket.filter.firewall.FirewallFilter"
+		  p:blockAllState="${server.socket.firewall.block.autoStart}"
+		  p:allows="${server.socket.firewall.allows}"
+		  p:blocks="${server.socket.firewall.blocks}" p:blockTimes="${server.socket.firewall.block.times}"
+		  p:maxClients="${server.socket.firewall.client.max}"
+		  p:bytesInSecondLimit="${server.socket.firewall.client.bytes}"
+		  p:timesInSecondLimit="${server.socket.firewall.client.packages}"
+		  p:maxViolateTimes="${server.socket.firewall.client.times}"
+	/>
+
+	<bean id="sessionManagerFilter" class="com.zxcc.socket.filter.session.SessionManagerFilter"
+		  p:delayTimes="${service.cache.time}" />
+
+	<!-- 通信层拦截器 end -->
+
+</beans>

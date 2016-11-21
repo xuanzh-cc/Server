@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="common-blog-booter:war">
+    <output-path>$PROJECT_DIR$/common-blog-booter/target</output-path>
+    <root id="archive" name="common-blog-booter.war">
+      <element id="artifact" artifact-name="common-blog-booter:war exploded" />
+    </root>
+  </artifact>
+</component>

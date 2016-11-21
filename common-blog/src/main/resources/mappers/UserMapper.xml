@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.zxcc.blog.user.dao.UserDao">
+
+    <resultMap id="articleUserInfo" type="com.zxcc.blog.user.dto.UserDto">
+        <id column="user_id" property="userId"/>
+        <result column="nickname" property="nickname"/>
+    </resultMap>
+
+    <sql id="base_column">
+        user_id, username, password, profile, nickname, sign, imageUrl
+    </sql>
+
+    <insert id="insertUser" parameterType="com.zxcc.blog.user.entity.User">
+      INSERT INTO user(username, password) VALUES(#{user.username}, #{user.password})
+    </insert>
+
+    <!-- 修改密码 -->
+    <update id="updateUserPassword" >
+        update user set password = #{password} where user_id = #{userId}
+    </update>
+
+    <!-- 根据ID查询 -->
+    <select id="queryById" resultType="com.zxcc.blog.user.entity.User">
+      SELECT <include refid="base_column"/> from user WHERE user_id = #{userId}
+    </select>
+
+    <!-- 根据用户名查询 -->
+    <select id="queryByUsername" resultType="com.zxcc.blog.user.entity.User">
+        SELECT <include refid="base_column"/> from user WHERE username = #{username}
+    </select>
+
+    <!-- 查询文章的作者信息 -->
+    <select id="getArticleUser" resultMap="articleUserInfo">
+      select user_id, nickname from user where user_id = #{user_id}
+    </select>
+</mapper>

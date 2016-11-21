@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/common-blog/blog.iml" filepath="$PROJECT_DIR$/common-blog/blog.iml" />
+      <module fileurl="file://$PROJECT_DIR$/common.iml" filepath="$PROJECT_DIR$/common.iml" />
+      <module fileurl="file://$PROJECT_DIR$/common-big-data/common-big-data.iml" filepath="$PROJECT_DIR$/common-big-data/common-big-data.iml" />
+      <module fileurl="file://$PROJECT_DIR$/common-blog-booter/common-blog-booter.iml" filepath="$PROJECT_DIR$/common-blog-booter/common-blog-booter.iml" />
+      <module fileurl="file://$PROJECT_DIR$/common-cache-redis/common-cache-redis.iml" filepath="$PROJECT_DIR$/common-cache-redis/common-cache-redis.iml" />
+      <module fileurl="file://$PROJECT_DIR$/common-game-socket/common-game-socket.iml" filepath="$PROJECT_DIR$/common-game-socket/common-game-socket.iml" />
+      <module fileurl="file://$PROJECT_DIR$/common-resource/common-resource.iml" filepath="$PROJECT_DIR$/common-resource/common-resource.iml" />
+      <module fileurl="file://$PROJECT_DIR$/common-socket/common-socket.iml" filepath="$PROJECT_DIR$/common-socket/common-socket.iml" />
+      <module fileurl="file://$PROJECT_DIR$/commonStudyTest/common-study-test.iml" filepath="$PROJECT_DIR$/commonStudyTest/common-study-test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/common-utility/common-utility.iml" filepath="$PROJECT_DIR$/common-utility/common-utility.iml" />
+    </modules>
+  </component>
+</project>

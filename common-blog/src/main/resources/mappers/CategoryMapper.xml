@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zxcc.blog.category.dao.CategoryDao">
+
+	<resultMap id="articleCategoryInfo" type="com.zxcc.blog.category.dto.CategoryDto">
+		<id column="category_id" property="categoryId"/>
+		<result column="category_name" property="categoryName"/>
+	</resultMap>
+
+	<resultMap id="categoryDtoInfo" type="com.zxcc.blog.category.dto.CategoryDto">
+		<id column="category_id" property="categoryId"/>
+		<result column="category_name" property="categoryName"/>
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+		<result column="priority" property="priority"/>
+		<result column="user_id" property="userId"/>
+		<association property="totalArticleNum" select="com.zxcc.blog.article.dao.ArticleDao.getArticleNumByCategory" column="category_id"/>
+	</resultMap>
+
+	<!-- 插入类别 -->
+	<insert id="insertCategory" parameterType="com.zxcc.blog.category.entity.Category">
+		insert ignore into category(
+			category_id,
+			category_name,
+			create_time,
+			priority,
+			user_id
+		)
+		values
+		(
+			#{category.categoryId},
+			#{category.categoryName},
+			#{category.createTime, jdbcType=TIMESTAMP },
+			#{category.priority},
+			#{category.user.userId}
+		)
+	</insert>
+
+	<!-- 查询文章对应的类别 -->
+	<select id="getArticleCategory" resultMap="articleCategoryInfo">
+		select category_id, category_name from category where category_id = #{category_id}
+	</select>
+
+	<!-- 查询指定范围内的全部类别 -->
+	<select id="queryAll" resultMap="categoryDtoInfo">
+		select category_id, category_name, create_time, priority from category order by priority asc, create_time desc limit #{offset}, #{limit}
+	</select>
+
+	<!-- 查找指定用户的 指定id 的类别数量，用来判断是否存在对应id的类别 -->
+	<select id="existId" resultType="java.lang.Integer">
+		select count(category_id) from category where category_id = #{categoryId} and user_id = #{userId}
+	</select>
+
+	<!-- 查找指定名称 的类别数量，用来判断是否存在 -->
+	<select id="existName" resultType="java.lang.Integer">
+		select count(category_id) from category where upper(category_name) = #{categoryName} and user_id = #{userId}
+	</select>
+
+	<!-- 根据ID查询 -->
+	<select id="queryById" resultMap="categoryDtoInfo">
+		select category_id, category_name, create_time, priority, user_id from category where category_id = #{categoryId}
+	</select>
+
+	<!-- 删除类别 -->
+	<delete id="deleteById">
+		delete from category where category_id = #{categoryId};
+	</delete>
+
+	<!-- 更新类别,(只更新名称 和 优先级) -->
+	<update id="updateCategory" parameterType="com.zxcc.blog.category.entity.Category">
+		update category
+			set category_name = #{category.categoryName}, priority = #{category.priority}
+		where category_id = #{category.categoryId} and user_id = #{category.user.userId}
+	</update>
+</mapper>

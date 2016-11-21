@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zxcc.blog.article.dao.ArticleDao">
+
+	<!-- 文章简短信息 -->
+	<resultMap id="articleDtoBrief" type="com.zxcc.blog.article.dto.ArticleDtoBrief">
+		<id column="article_id" property="articleId"/>
+		<result column="title" property="title" />
+		<result column="summary" property="summary"/>
+		<result column="clickHit" property="clickHit" />
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+		<!-- category -->
+		<association property="category" column="category_id" select="com.zxcc.blog.category.dao.CategoryDao.getArticleCategory"/>
+		<!-- user -->
+		<association property="user" column="user_id" select="com.zxcc.blog.user.dao.UserDao.getArticleUser"/>
+		<!-- tags -->
+		<collection property="tags" column="article_id" javaType="java.util.HashSet" ofType="com.zxcc.blog.tag.dto.TagDto" select="com.zxcc.blog.tag.dao.TagDao.getArticleTags"/>
+	</resultMap>
+
+	<!-- 文章详细信息 -->
+	<resultMap id="articleDtoDetail" type="com.zxcc.blog.article.dto.ArticleDtoDetail">
+		<id column="article_id" property="articleId"/>
+		<result column="title" property="title" />
+		<result column="content" property="content"/>
+		<result column="clickHit" property="clickHit" />
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+		<!-- category -->
+		<association property="category" column="category_id" select="com.zxcc.blog.category.dao.CategoryDao.getArticleCategory"/>
+		<!-- user -->
+		<association property="user" column="user_id" select="com.zxcc.blog.user.dao.UserDao.getArticleUser"/>
+		<!-- tags -->
+		<collection property="tags" column="article_id" javaType="java.util.HashSet" ofType="com.zxcc.blog.tag.dto.TagDto" select="com.zxcc.blog.tag.dao.TagDao.getArticleTags"/>
+	</resultMap>
+
+	<resultMap id="article" type="com.zxcc.blog.article.entity.Article">
+	</resultMap>
+
+	<!-- 插入文章 -->
+	<insert id="insertArticle" parameterType="com.zxcc.blog.article.entity.Article">
+		<!-- 当主键冲突或者报错的时候，不报错，而是返回 0 -->
+		insert ignore into article(
+			article_id,
+			title,
+			content,
+			summary,
+			clickHit,
+			create_time,
+			category_id,
+			user_id
+		) values (
+			#{article.articleId},
+			#{article.title},
+			#{article.content},
+			#{article.summary},
+			#{article.clickHit},
+			#{article.createTime, jdbcType=TIMESTAMP},
+			#{article.category.categoryId},
+			#{article.user.userId}
+		);
+	</insert>
+
+	<!-- 查询范围内的全部文章简短信息 -->
+	<select id="queryAllBrief" resultMap="articleDtoBrief">
+		select article_id, title, summary, clickHit, create_time, category_id, user_id from article order by create_time desc limit #{offset}, #{limit}
+	</select>
+
+	<!-- 根据 id 查询文章详细信息 -->
+	<select id="queryDetailById" resultMap="articleDtoDetail">
+		select article_id, title, content, clickHit, create_time, category_id, user_id from article where article_id = #{articleId}
+	</select>
+
+	<!-- 查找指定用户的 指定id 的文章数量，用来判断是否存在对应id的文章 -->
+	<select id="existId" resultType="java.lang.Integer">
+		select count(article_id) from article where article_id = #{articleId} and user_id = #{userId}
+	</select>
+
+	<!-- 更新文章 -->
+	<update id="updateArticle" parameterType="com.zxcc.blog.article.entity.Article">
+		update article set
+			title = #{article.title},
+			content = #{article.content},
+			summary = #{article.summary},
+			category_id = #{article.category.categoryId}
+		where article_id = #{article.articleId}
+	</update>
+
+	<!-- 根据ID 删除文章 -->
+	<delete id="deleteById">
+		delete from article where article_id = #{articleId}
+	</delete>
+
+	<!-- 根据类别查询 全部的文章ID -->
+	<select id="queryArticleIdByCategoryId" resultType="java.lang.Long">
+		select article_id from article where category_id = #{categoryId}
+	</select>
+
+	<!-- 根据类别 查询范围内的全部文章简短信息 -->
+	<select id="queryAllBriefByCategoryId" resultMap="articleDtoBrief">
+		select article_id, title, summary, clickHit, create_time, category_id, user_id from article where category_id = #{categoryId} order by create_time desc limit #{offset}, #{limit}
+	</select>
+
+	<!-- 根据文章ID列表 批量删除文章 -->
+	<delete id="deleteByArticleIdList">
+		delete from article where article_id in 
+		<foreach collection="articleIdList" item="articleId" open="(" close=")" separator=",">
+			#{articleId}
+		</foreach>
+	</delete>
+
+	<!-- 查询全部文章的数目 -->
+	<select id="getTotalNum" resultType="java.lang.Integer">
+		select count(article_id) from article;
+	</select>
+
+	<!-- 根据类别查询文章 -->
+	<select id="queryByCategoryId" resultMap="articleDtoBrief">
+		select article_id, title, summary, clickHit, create_time, category_id, user_id from article where category_id=#{categoryId} order by create_time desc
+	</select>
+
+	<!-- 点击查看数量 +1 -->
+	<update id="incrClickHit">
+		update article
+			set clickHit = clickHit + 1
+		where article_id = #{articleId}
+	</update>
+
+	<!-- 查找某个类别下的全部文章总数 -->
+	<select id="getArticleNumByCategory" resultType="java.lang.Integer">
+		select count(article_id) from article where category_id=#{categoryId}
+	</select>
+</mapper>
+
+

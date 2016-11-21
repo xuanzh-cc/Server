@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zxcc.blog.tag.dao.TagDao">
+
+	<!-- tag 简要信息 -->
+	<resultMap id="articleTagInfo" type="com.zxcc.blog.tag.dto.TagDto">
+		<id column="tag_id" property="tagId"/>
+		<result column="tag_name" property="tagName"/>
+	</resultMap>
+
+	<!-- 插入 -->
+	<insert id="insertArticleTags">
+		<!-- 当主键冲突或者报错的时候，不报错，而是返回 0 -->
+		insert into article_tags(article_id, tag_id) values
+		<foreach collection="tags" item="tag" index="index" separator=",">
+			<if test="tag != null">
+				<trim prefix="(" suffix=")" prefixOverrides="">
+				#{articleId}, #{tag.tagId}
+				</trim>
+			</if>
+		</foreach>
+	</insert>
+
+	<!-- 查询文章所拥有的标签 -->
+	<select id="getArticleTags" resultMap="articleTagInfo">
+		select tag_id, tag_name from tag where tag_id in (select tag_id from article_tags where article_id = #{article_id})
+	</select>
+
+	<!-- 删除文章对应的全部的tag -->
+	<delete id="deleteAllTagIdByArticleId">
+		delete from article_tags where article_id = #{articleId}
+	</delete>
+
+	<delete id="deleteAllTagIdByArticleIdList" parameterType="java.lang.Long">
+		delete from article_tags where article_id in
+		<foreach collection="articleIdList" item="articleId" open="(" close=")" separator=",">
+			#{articleId}
+		</foreach>
+	</delete>
+
+</mapper>
+
+

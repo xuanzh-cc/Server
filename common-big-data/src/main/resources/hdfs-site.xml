@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+
+<!-- Put site-specific property overrides in this file. -->
+
+<configuration>
+
+<!-- hdsf-site.xml -->
+<property>  <!-- 设置 hdsf 副本数 -->
+	<name>dfs.replication</name>
+	<value>1</value>
+</property>
+
+<property> 	<!-- 不进行权限检查 -->
+	<name>dfs.permissions</name>
+	<value>false</value>
+</property>
+
+
+</configuration>

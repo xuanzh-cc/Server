@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding">
+    <file url="file://$PROJECT_DIR$" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/common-big-data" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/common-blog" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/common-blog-booter" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/common-cache-redis" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/common-game-socket" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/common-resource" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/common-socket" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/common-utility" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/commonStudyTest" charset="UTF-8" />
+  </component>
+</project>

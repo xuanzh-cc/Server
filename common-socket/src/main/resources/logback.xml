@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration debug="true">
+
+	<property name="LOG_HOME" value="../var/log" />
+	<appender name="stdout" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder charset="GBK">
+			<pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{1024} - %msg%n
+			</pattern>
+		</encoder>
+		<filter class="ch.qos.logback.classic.filter.LevelFilter">
+			<level>ERROR</level>
+		</filter>
+	</appender>
+
+	<appender name="FILE"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${LOG_HOME}/wl.log</file>
+		<Encoding>UTF-8</Encoding>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<!--日志文件输出的文件名 -->
+			<FileNamePattern>${LOG_HOME}/wl.log.%d{yyyy-MM-dd}.%i.log
+			</FileNamePattern>
+			<MaxHistory>60</MaxHistory>
+			<timeBasedFileNamingAndTriggeringPolicy
+				class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+				<!-- or whenever the file size reaches 100MB -->
+				<maxFileSize>50MB</maxFileSize>
+			</timeBasedFileNamingAndTriggeringPolicy>
+
+		</rollingPolicy>
+		<layout class="ch.qos.logback.classic.PatternLayout">
+			<!--格式化输出：%d表示日期，%thread表示线程名，%-5level：级别从左显示5个字符宽度%msg：日志消息，%n是换行符 -->
+			<pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} -
+				%msg%n
+			</pattern>
+		</layout>
+		<filter class="ch.qos.logback.classic.filter.LevelFilter">
+			<level>ERROR</level>
+			<onMatch>DENY</onMatch>
+			<onMismatch>ACCEPT</onMismatch>
+		</filter>
+
+		<!--日志文件最大的大小 -->
+	</appender>
+
+
+	<appender name="error"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${LOG_HOME}/err/wlerror.log</file>
+		<Encoding>UTF-8</Encoding>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<!--日志文件输出的文件名 -->
+			<FileNamePattern>${LOG_HOME}/err/wlerror.log.%d{yyyy-MM-dd}.%i.log
+			</FileNamePattern>
+			<MaxHistory>60</MaxHistory>
+
+			<timeBasedFileNamingAndTriggeringPolicy
+				class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+				<!-- or whenever the file size reaches 100MB -->
+				<maxFileSize>50MB</maxFileSize>
+			</timeBasedFileNamingAndTriggeringPolicy>
+
+		</rollingPolicy>
+		<layout class="ch.qos.logback.classic.PatternLayout">
+			<!--格式化输出：%d表示日期，%thread表示线程名，%-5level：级别从左显示5个字符宽度%msg：日志消息，%n是换行符 -->
+			<pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} -
+				%msg%n
+			</pattern>
+		</layout>
+		<filter class="ch.qos.logback.classic.filter.LevelFilter"><!-- 只打印错误日志 -->
+			<level>ERROR</level>
+			<onMatch>ACCEPT</onMatch>
+			<onMismatch>DENY</onMismatch>
+		</filter>
+
+		<!--日志文件最大的大小 -->
+	</appender>
+	
+	
+	<appender name="debug_error_1"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${LOG_HOME}/debug_error/wlerror.log</file>
+		<Encoding>UTF-8</Encoding>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<!--日志文件输出的文件名 -->
+			<FileNamePattern>${LOG_HOME}/err/debug_error.log.%d{yyyy-MM-dd}.%i.log
+			</FileNamePattern>
+			<MaxHistory>60</MaxHistory>
+
+			<timeBasedFileNamingAndTriggeringPolicy
+				class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+				<!-- or whenever the file size reaches 100MB -->
+				<maxFileSize>50MB</maxFileSize>
+			</timeBasedFileNamingAndTriggeringPolicy>
+
+		</rollingPolicy>
+		<layout class="ch.qos.logback.classic.PatternLayout">
+			<!--格式化输出：%d表示日期，%thread表示线程名，%-5level：级别从左显示5个字符宽度%msg：日志消息，%n是换行符 -->
+			<pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} -
+				%msg%n
+			</pattern>
+		</layout>
+		<filter class="ch.qos.logback.classic.filter.LevelFilter"><!-- 只打印错误日志 -->
+			<level>ERROR</level>
+			<onMatch>ACCEPT</onMatch>
+			<onMismatch>DENY</onMismatch>
+		</filter>
+
+		<!--日志文件最大的大小 -->
+	</appender>
+	
+	<!-- 物品流水 appender -->
+	<appender name="ITEM_FLOW"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${LOG_HOME}/flow/itemFlow.log</file>
+		<Encoding>UTF-8</Encoding>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<!--日志文件输出的文件名 -->
+			<FileNamePattern>${LOG_HOME}/flow/itemFlow.log.%d{yyyy-MM-dd}.%i.log
+			</FileNamePattern>
+			<MaxHistory>60</MaxHistory>
+
+			<timeBasedFileNamingAndTriggeringPolicy
+				class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+				<!-- or whenever the file size reaches 100MB -->
+				<maxFileSize>50MB</maxFileSize>
+			</timeBasedFileNamingAndTriggeringPolicy>
+
+		</rollingPolicy>
+		<layout class="ch.qos.logback.classic.PatternLayout">
+			<!--格式化输出：%d表示日期，%thread表示线程名，%-5level：级别从左显示5个字符宽度%msg：日志消息，%n是换行符 -->
+			<pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} -
+				%msg%n
+			</pattern>
+		</layout>
+		<!--日志文件最大的大小 -->
+	</appender>
+
+
+
+	<!-- <logger name="java.sql" level="DEBUG"> <appender-ref ref="stdout" /> 
+		<appender-ref ref="FILE" /> </logger> -->
+
+
+	<logger name="com.lf" level="DEBUG">
+		<appender-ref ref="stdout" />
+		<appender-ref ref="FILE" />
+		<appender-ref ref="error" />
+	</logger>
+
+
+	<!-- io.netty -->
+	<logger name="io.netty" level="DEBUG">
+		<appender-ref ref="stdout" />
+		<appender-ref ref="FILE" />
+		<appender-ref ref="error" />
+	</logger>
+
+
+	<logger name="org.apache" level="DEBUG">
+		<appender-ref ref="stdout" />
+		<appender-ref ref="FILE" />
+		<appender-ref ref="error" />
+	</logger>
+
+
+
+	<logger name="org.mybatis" level="DEBUG">
+		<appender-ref ref="stdout" />
+		<appender-ref ref="FILE" />
+		<appender-ref ref="error" />
+	</logger>
+
+	<logger name="com.google.common.eventbus" level="DEBUG">
+		<appender-ref ref="stdout" />
+		<appender-ref ref="FILE" />
+		<appender-ref ref="error" />
+	</logger>
+	
+	<!-- 流水日志 -->
+	<logger name="item_flow" level="DEBUG">
+		<appender-ref ref="stdout" />
+		<appender-ref ref="ITEM_FLOW" />
+	</logger>
+	
+	<!-- 流水日志 -->
+	<logger name="debug_error" level="DEBUG">
+		<appender-ref ref="stdout" />
+		<appender-ref ref="debug_error_1" />
+	</logger>
+
+</configuration>

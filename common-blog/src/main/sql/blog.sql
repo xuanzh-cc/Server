@@ -1,0 +1,11 @@
+CREATE DATABASE blog;
+
+USE blog;
+
+CREATE TABLE user(
+  id INT(11) NOT NULL AUTO_INCREMENT COMMENT '用户主键ID',
+  username VARCHAR(100) NOT NULL UNIQUE COMMENT '用户名',
+  password VARCHAR(100) NOT NULL COMMENT '密码',
+  PRIMARY KEY (id),
+  KEY dx_user_password (username, password)
+)ENGINE=InnoDB AUTO_INCREMENT=1000 DEFAULT CHARSET=utf8 COMMENT '用户表';
